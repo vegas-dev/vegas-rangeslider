@@ -31,7 +31,14 @@
 	<main class="container">
 		<div class="mt-5">
 			<div class="rs-default">
-				<input type="range" min="10" max="100" step="1" name="rs-default" class="vg-range-slider">
+				<input type="text" name="range-slider" value="" class="vg-range-slider"
+					   data-type="double"
+					   data-min="15.00"
+					   data-max="8025.00"
+					   data-from="15"
+					   data-to="8025"
+					   data-postfix="₽"
+					   data-step="1" >
 			</div>
 		</div>
 	</main>
@@ -44,7 +51,9 @@
 	document.addEventListener('DOMContentLoaded', function () {
 		let elements = document.querySelectorAll('.vg-range-slider');
 		for (const element of elements) {
-			new VGRangeSlider(element, {})
+			new VGRangeSlider(element, {
+				skin: 'round'
+			})
 		}
 	});
 </script>
