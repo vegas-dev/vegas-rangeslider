@@ -22,13 +22,19 @@ $skin-round-map: (
 		background: #6280b7,
 		radius: 4px,
 	),
+	bar: (
+		top: 36px,
+		height: 4px,
+		background: #006cfa
+	),
 	handle: (
-		top: 25px,
-		width: 30px,
-		height: 30px,
-		border-size: 1px,
-		border-type: solid,
-		border-color:  rgba(0,0,0,0.3),
+		top: 26px,
+		width: 24px,
+		height: 24px,
+		border: 4px solid #006cfa,
+		background: white,
+		radius: 24px,
+		shadow: 0 1px 3px rgba(0,0,255,0.3)
 	)
 );
 

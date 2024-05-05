@@ -62,6 +62,13 @@ input.vg-range-slider {
 		right: 0;
 	}
 
+	&-bar {
+		position: absolute;
+		display: block;
+		left: 0;
+		width: 0;
+	}
+
 	&-handle {
 		position: absolute;
 		display: block;
@@ -93,6 +100,22 @@ input.vg-range-slider {
 				&:before {
 					border-top-color: var(--vg-rs-skin-round-single-background);
 				}
+			}
+
+			.vg-rs-bar {
+				top: var(--vg-rs-skin-round-bar-top);
+				height: var(--vg-rs-skin-round-bar-height);
+				background-color: var(--vg-rs-skin-round-bar-background);
+			}
+
+			.vg-rs-handle {
+				top: var(--vg-rs-skin-round-handle-top);
+				width: var(--vg-rs-skin-round-handle-width);
+				height: var(--vg-rs-skin-round-handle-height);
+				border: var(--vg-rs-skin-round-handle-border);
+				background-color: var(--vg-rs-skin-round-handle-background);
+				border-radius: var(--vg-rs-skin-round-handle-radius);
+				box-shadow: var(--vg-rs-skin-round-handle-shadow);
 			}
 
 			.vg-rs-min, .vg-rs-max, .vg-rs-from, .vg-rs-to {

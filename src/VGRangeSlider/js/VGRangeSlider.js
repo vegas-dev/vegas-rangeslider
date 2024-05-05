@@ -46,6 +46,8 @@ class VGRangeSlider {
 			from: 'vg-rs-from',
 			to: 'vg-rs-to',
 			single: 'vg-rs-single',
+			bar: 'vg-rs-bar',
+			handle: 'vg-rs-handle',
 			grid: 'vg-rs-grid',
 			skin: {
 				flat: 'vg-rs-skin-flat',
@@ -75,16 +77,20 @@ class VGRangeSlider {
 
 		for (let obj in data) {
 			if (typeof obj !== 'object') {
-				if (obj === 'min' || obj === 'max' || obj === 'from' || obj === 'to') {
+				if (obj === 'min' || obj === 'max') {
 					$mainContainer.querySelector('.vg-rs-' + obj).innerHTML = parseFloat(data[obj]);
 				}
 
-				if (obj === 'from') {
-					$mainContainer.querySelector('.vg-rs-from').style.visibility = 'hidden';
-				}
+				if (obj === 'type' && data[obj] === 'single' ) {
+					let position = _this.setPostion('single');
+					$mainContainer.querySelector('.vg-rs-single').style.left = position + '%';
+					$mainContainer.querySelector('.vg-rs-single').style.transform = 'translateX(-' + position + '%)';
 
-				if (obj === 'to') {
-					$mainContainer.querySelector('.vg-rs-to').style.visibility = 'hidden';
+					$mainContainer.querySelector('.vg-rs-bar').style.left = 0;
+					$mainContainer.querySelector('.vg-rs-bar').style.width = position + '%';
+
+					$mainContainer.querySelector('.vg-rs-handle').style.left = position + '%';
+					$mainContainer.querySelector('.vg-rs-handle').style.transform = 'translateX(-' + position + '%)';
 				}
 			}
 		}
@@ -101,6 +107,8 @@ class VGRangeSlider {
 		}
 
 		drawRSWrapper($container);
+		drawRSBar($container);
+		drawRSHandle($container);
 
 		_this.element.before($container);
 
@@ -126,9 +134,6 @@ class VGRangeSlider {
 					$single.classList.add(_this.classes.single);
 					$single.innerHTML = _this.settings.from;
 
-					let position = _this.setPostion('single');
-					$single.style.left = position + '%';
-
 					wrapper.prepend($single);
 
 					removeElementArray(classes, _this.classes.from);
@@ -143,6 +148,18 @@ class VGRangeSlider {
 					});
 				}
 			}
+		}
+
+		function drawRSBar(container) {
+			let $bar = document.createElement('span');
+			$bar.classList.add(_this.classes.bar);
+			container.appendChild($bar)
+		}
+
+		function drawRSHandle(container) {
+			let $handle = document.createElement('span');
+			$handle.classList.add(_this.classes.handle);
+			container.appendChild($handle);
 		}
 	}
 
