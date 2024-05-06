@@ -67,6 +67,28 @@ class VGRangeSlider {
 
 		/** **/
 		_this.setData();
+
+		if(_this.settings.type === 'single') {
+			let $mainContainer = document.getElementById(_this.id),
+				mainContainerWidth = $mainContainer.clientWidth,
+				$handler = $mainContainer.querySelector('.' + _this.classes.handle);
+
+			$handler.onpointerdown = function(event) {
+				$handler.setPointerCapture(event.pointerId);
+				$handler.onpointermove = function(event) {
+					let from = (event.clientX - $mainContainer.getBoundingClientRect().left) * 100 / mainContainerWidth;
+
+					_this.setData({
+						from: from
+					})
+				};
+
+				$handler.onpointerup = function(event) {
+					$handler.onpointermove = null;
+					$handler.onpointerup = null;
+				};
+			};
+		}
 	}
 
 	setData(data = {}) {
@@ -82,9 +104,10 @@ class VGRangeSlider {
 				}
 
 				if (obj === 'type' && data[obj] === 'single' ) {
-					let position = _this.setPostion('single');
+					let position = _this.setPostion('single', data);
 					$mainContainer.querySelector('.vg-rs-single').style.left = position + '%';
 					$mainContainer.querySelector('.vg-rs-single').style.transform = 'translateX(-' + position + '%)';
+					$mainContainer.querySelector('.vg-rs-single').innerHTML = Math.round(position);
 
 					$mainContainer.querySelector('.vg-rs-bar').style.left = 0;
 					$mainContainer.querySelector('.vg-rs-bar').style.width = position + '%';
@@ -132,7 +155,6 @@ class VGRangeSlider {
 				if (_this.settings.type === 'single') {
 					let $single = document.createElement('span');
 					$single.classList.add(_this.classes.single);
-					$single.innerHTML = _this.settings.from;
 
 					wrapper.prepend($single);
 
@@ -163,18 +185,18 @@ class VGRangeSlider {
 		}
 	}
 
-	setPostion(type) {
+	setPostion(type, data) {
 		const _this = this;
 
 		if (type === 'single') {
-			let max = Number(_this.settings.max),
-				min = Number(_this.settings.min),
-				from = Number(_this.settings.from);
+			let max = Number(data.max),
+				min = Number(data.min),
+				from = Number(data.from);
 
 			if (from <= min) from = min;
 			if (from >= max) from = max;
 
-				return (from/100) * max;
+			return (from/100) * max;
 		}
 
 		return 0;
