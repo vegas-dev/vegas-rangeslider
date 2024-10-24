@@ -1,0 +1,56 @@
+$skin-round-map: (
+		height: 50px,
+		line: (
+				top: 36px,
+				height: 4px,
+				background: #dee4ec,
+				radius: 4px,
+		),
+		minMax: (
+				color: #333333,
+				font-size: 14px,
+				line-height: 1,
+				padding: 3px 5px,
+				background: rgba(0, 0, 0, 0.1),
+				radius: 4px,
+		),
+		single: (
+				color: #ffffff,
+				font-size: 14px,
+				line-height: 1,
+				padding: 3px 5px,
+				background: #6280b7,
+				radius: 4px,
+		),
+		bar: (
+				top: 36px,
+				height: 4px,
+				background: #006cfa
+		),
+		handle: (
+				top: 26px,
+				width: 24px,
+				height: 24px,
+				border: 4px solid #006cfa,
+				background: white,
+				radius: 24px,
+				shadow: 0 1px 3px rgba(0,0,255,0.3)
+		)
+);
+
+
+@mixin mix-vars($skin, $properties) {
+	@each $key, $value in $properties {
+		@if (is-map($value)) {
+			@each $k, $v in $value {
+				--vg-rs-skin-#{$skin}-#{$key}-#{$k}: #{$v}
+			}
+		} @else {
+			--vg-rs-skin-#{$skin}-#{$key}: #{$value}
+		}
+	}
+}
+
+@function is-map($var){
+	@return type-of($var) == 'map';
+}
