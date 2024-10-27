@@ -13,7 +13,7 @@ class VGRangeSlider extends BaseModule {
 			max: 0,
 			from: 0,
 			to: 0,
-			step: 1,
+			step: 0,
 			postfix: '',
 			grid: false
 		};
@@ -190,39 +190,41 @@ class VGRangeSlider extends BaseModule {
 		let position = {};
 
 		if (type === 'single') {
-			let left, from = datum.from, step = datum.step;
+			let left, // тут процент
+				from = datum.from, // тут простое число
+				step = datum.step,
+				min = datum.min,
+				max = datum.max;
 
 			if ('left' in datum) {
 				left = datum.left;
-				from = left * datum.max / 100;
+				from = left * max / 100;
 			} else {
-				if (from > datum.max) left = 100;
-				else left = from * 100 / datum.max
-				if (from < datum.min) left = 0;
+				if (from > max) left = 100;
+				else left = from * 100 / max
+				if (from < min) left = 0;
 			}
 
 			if (Number.isInteger(step)) {
-				left = Math.round(left);
 				from = Math.round(from);
+				if (step === 0) {
+					left = Math.round(left);
+				} else {
+					let stepPercent = step * 100 / max,
+						stepPiece = max / step;
+
+
+					console.log(step, stepPiece, stepPercent, left, from)
+				}
 			}
+
+			//console.log(left, from)
 
 			position = {
 				left: left,
-				max: datum.max,
-				min: datum.min,
+				max: max,
+				min: min,
 				from: from
-			}
-		}
-
-		function getStep(f) {
-			let step_percent = datum.step * 100 / datum.max,
-				step = step_percent * f / 100;
-
-			console.log(datum.step + step)
-
-			return {
-				left: f ,
-				from: step
 			}
 		}
 

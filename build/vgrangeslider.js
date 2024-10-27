@@ -10750,7 +10750,7 @@ class T2 extends Sa {
       max: 0,
       from: 0,
       to: 0,
-      step: 1,
+      step: 0,
       postfix: "",
       grid: !1
     }, this.classes = {
@@ -10858,11 +10858,18 @@ class T2 extends Sa {
   setPosition(e, B, t) {
     let r = {};
     if (B === "single") {
-      let C, i = t.from, n = t.step;
-      "left" in t ? (C = t.left, i = C * t.max / 100) : (i > t.max ? C = 100 : C = i * 100 / t.max, i < t.min && (C = 0)), Number.isInteger(n) && (C = Math.round(C), i = Math.round(i)), r = {
+      let C, i = t.from, n = t.step, a = t.min, o = t.max;
+      if ("left" in t ? (C = t.left, i = C * o / 100) : (i > o ? C = 100 : C = i * 100 / o, i < a && (C = 0)), Number.isInteger(n))
+        if (i = Math.round(i), n === 0)
+          C = Math.round(C);
+        else {
+          let u = n * 100 / o, l = o / n;
+          console.log(n, l, u, C, i);
+        }
+      r = {
         left: C,
-        max: t.max,
-        min: t.min,
+        max: o,
+        min: a,
         from: i
       };
     }
