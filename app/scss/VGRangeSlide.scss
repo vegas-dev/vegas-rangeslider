@@ -10,13 +10,30 @@
 }
 
 input.vg-range-slider {
-	display: none !important;
+	position: absolute;
+	display: block;
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 0;
+	font-size: 0;
+	line-height: 0;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	outline: none;
+	z-index: -9999;
+	background: none;
+	border-style: solid;
+	border-color: transparent;
+	visibility: hidden;
 }
 
 .vg-rs {
 	display: block;
 	width: 100%;
 	position: relative;
+	user-select: none;
 
 	&-wrapper {
 		width: 100%;
