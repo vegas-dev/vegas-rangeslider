@@ -130,7 +130,7 @@ class VGRangeSlider extends BaseModule {
 
 		if(_this.params.type === 'single') {
 			$line.onclick = function (event) {
-				let pos = _this.getPosition(event.clientX, containerPosition.left, containerPosition.width),
+				/*let pos = _this.getPosition(event.clientX, containerPosition.left, containerPosition.width),
 					data = _this.setPosition(_this.container,'single', {
 						left: pos,
 						max: _this.params.max,
@@ -140,13 +140,13 @@ class VGRangeSlider extends BaseModule {
 
 				_this.setData(data);
 
-				return false;
+				return false;*/
 			}
 
 			$handler.onpointerdown = function(event) {
 				$handler.setPointerCapture(event.pointerId);
 				$handler.onpointermove = function(event) {
-					let pos = _this.getPosition(event.clientX, containerPosition.left, containerPosition.width),
+					/*let pos = _this.getPosition(event.clientX, containerPosition.left, containerPosition.width),
 						data = _this.setPosition(_this.container,'single', {
 							left: pos,
 							max: _this.params.max,
@@ -154,7 +154,7 @@ class VGRangeSlider extends BaseModule {
 							step: _this.params.step
 						});
 
-					_this.setData(data)
+					_this.setData(data)*/
 				};
 
 				$handler.onpointerup = function() {
