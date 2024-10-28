@@ -1,6 +1,7 @@
 import BaseModule from "./utils/base-module";
 import {Manipulator, mergeDeepObject, removeElementArray, normalizeData} from "./utils/manipulator";
 import {data} from "autoprefixer";
+import {c} from "vite/dist/node/types.d-aGj9QkWt.js";
 
 class VGRangeSlider extends BaseModule {
 	constructor(el, params = {}) {
@@ -124,26 +125,34 @@ class VGRangeSlider extends BaseModule {
 		const _this = this;
 
 		let $handler = _this.container.querySelector('.' + _this.classes.handle),
+			$line = _this.container.querySelector('.' + _this.classes.line),
 			containerPosition = _this.getPosition(_this.container);
 
-		_this.container.ondragstart = function(){
-			return false;
-		}
-
 		if(_this.params.type === 'single') {
-			$handler.onpointerdown = function(event) {
-				$handler.setPointerCapture(event.pointerId);
-				$handler.onpointermove = function(event) {
-					let pos = (event.clientX - containerPosition.left) * 100 / containerPosition.width;
-					if (pos < 0) pos = 0;
-					else if (pos > 100) pos = 100;
-
-					let data = _this.setPosition(_this.container,'single', {
+			$line.onclick = function (event) {
+				let pos = _this.getPosition(event.clientX, containerPosition.left, containerPosition.width),
+					data = _this.setPosition(_this.container,'single', {
 						left: pos,
 						max: _this.params.max,
 						min: _this.params.min,
 						step: _this.params.step
 					});
+
+				_this.setData(data);
+
+				return false;
+			}
+
+			$handler.onpointerdown = function(event) {
+				$handler.setPointerCapture(event.pointerId);
+				$handler.onpointermove = function(event) {
+					let pos = _this.getPosition(event.clientX, containerPosition.left, containerPosition.width),
+						data = _this.setPosition(_this.container,'single', {
+							left: pos,
+							max: _this.params.max,
+							min: _this.params.min,
+							step: _this.params.step
+						});
 
 					_this.setData(data)
 				};
@@ -190,8 +199,8 @@ class VGRangeSlider extends BaseModule {
 		let position = {};
 
 		if (type === 'single') {
-			let left, // тут процент
-				from = datum.from, // тут простое число
+			let left,
+				from = datum.from,
 				step = datum.step,
 				min = datum.min,
 				max = datum.max;
@@ -210,15 +219,12 @@ class VGRangeSlider extends BaseModule {
 				if (step === 0) {
 					left = Math.round(left);
 				} else {
-					let stepPercent = step * 100 / max,
-						stepPiece = max / step;
-
-
-					console.log(step, stepPiece, stepPercent, left, from)
+					if (from < step ) from = step;
+					if (!Number.isInteger(from/step)) {
+						from = Math.floor(from / step) * step;
+					}
 				}
 			}
-
-			//console.log(left, from)
 
 			position = {
 				left: left,
@@ -231,8 +237,16 @@ class VGRangeSlider extends BaseModule {
 		return position
 	}
 
-	getPosition(el) {
-		return el.getBoundingClientRect();
+	getPosition(x, left, width) {
+		let position = (x - left) * 100 / width;
+
+		if (position < 0){
+			return 0;
+		} else if (position > 100) {
+			return 100;
+		} else {
+			return position;
+		}
 	}
 }
 
