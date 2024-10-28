@@ -1,7 +1,5 @@
 import BaseModule from "./utils/base-module";
 import {Manipulator, mergeDeepObject, removeElementArray, normalizeData} from "./utils/manipulator";
-import {data} from "autoprefixer";
-import {c} from "vite/dist/node/types.d-aGj9QkWt.js";
 
 class VGRangeSlider extends BaseModule {
 	constructor(el, params = {}) {
@@ -125,28 +123,13 @@ class VGRangeSlider extends BaseModule {
 		const _this = this;
 
 		let $handler = _this.container.querySelector('.' + _this.classes.handle),
-			$line = _this.container.querySelector('.' + _this.classes.line),
-			containerPosition = _this.getPosition(_this.container);
+			$line = [_this.container.querySelector('.' + _this.classes.line), _this.container.querySelector('.' + _this.classes.bar)],
+			containerPosition = _this.container.getBoundingClientRect();
 
 		if(_this.params.type === 'single') {
-			$line.onclick = function (event) {
-				/*let pos = _this.getPosition(event.clientX, containerPosition.left, containerPosition.width),
-					data = _this.setPosition(_this.container,'single', {
-						left: pos,
-						max: _this.params.max,
-						min: _this.params.min,
-						step: _this.params.step
-					});
-
-				_this.setData(data);
-
-				return false;*/
-			}
-
-			$handler.onpointerdown = function(event) {
-				$handler.setPointerCapture(event.pointerId);
-				$handler.onpointermove = function(event) {
-					/*let pos = _this.getPosition(event.clientX, containerPosition.left, containerPosition.width),
+			$line.forEach(function ($item) {
+				$item.onclick = function (event) {
+					let pos = _this.getPosition(event.clientX, containerPosition.left, containerPosition.width),
 						data = _this.setPosition(_this.container,'single', {
 							left: pos,
 							max: _this.params.max,
@@ -154,7 +137,24 @@ class VGRangeSlider extends BaseModule {
 							step: _this.params.step
 						});
 
-					_this.setData(data)*/
+					_this.setData(data);
+
+					return false;
+				}
+			})
+
+			$handler.onpointerdown = function(event) {
+				$handler.setPointerCapture(event.pointerId);
+				$handler.onpointermove = function(event) {
+					let pos = _this.getPosition(event.clientX, containerPosition.left, containerPosition.width),
+						data = _this.setPosition(_this.container,'single', {
+							left: pos,
+							max: _this.params.max,
+							min: _this.params.min,
+							step: _this.params.step
+						});
+
+					_this.setData(data)
 				};
 
 				$handler.onpointerup = function() {
