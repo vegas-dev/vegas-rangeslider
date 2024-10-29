@@ -94,10 +94,20 @@ input.vg-range-slider {
 		z-index: 1;
 	}
 
+	&-grid {
+		display: flex;
+		justify-content: space-between;
+		position: absolute;
+	}
+
 	// Skins
 	&-skin {
 		&-round {
 			height: var(--vg-rs-skin-round-height);
+
+			&.vg-rs-with-grid {
+				height: calc(var(--vg-rs-skin-round-height) + var(--vg-rs-skin-round-grid-height));
+			}
 
 			.vg-rs-line {
 				top: var(--vg-rs-skin-round-line-top);
@@ -142,6 +152,23 @@ input.vg-range-slider {
 				padding: var(--vg-rs-skin-round-minMax-padding);
 				background-color: var(--vg-rs-skin-round-minMax-background);
 				border-radius: var(--vg-rs-skin-round-minMax-radius);
+			}
+
+			.vg-rs-grid {
+				width: calc(100% - var(--vg-rs-skin-round-handle-width));
+				left: calc(var(--vg-rs-skin-round-handle-width) / 2);
+				top: calc(var(--vg-rs-skin-round-height) - var(--vg-rs-skin-round-handle-height) / 2 + var(--vg-rs-skin-round-line-height) / 2);
+				height: var(--vg-rs-skin-round-grid-height);
+
+				&-line {
+					width: var(--vg-rs-skin-round-gridLine-width);
+					height: var(--vg-rs-skin-round-gridLine-height);
+					background-color: var(--vg-rs-skin-round-gridLine-background);
+
+					&.big {
+						height: calc(var(--vg-rs-skin-round-gridLine-height) * 2);
+					}
+				}
 			}
 		}
 	}

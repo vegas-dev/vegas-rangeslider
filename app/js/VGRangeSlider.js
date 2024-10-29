@@ -14,7 +14,7 @@ class VGRangeSlider extends BaseModule {
 			to: 0,
 			step: 0,
 			postfix: '',
-			grid: false
+			grid: true
 		};
 		this.classes = {
 			container: 'vg-rs',
@@ -35,6 +35,7 @@ class VGRangeSlider extends BaseModule {
 		}
 		this._id = 'vg-rs-' + Math.round(Math.random() * 100);
 		this._container = null;
+		this.isGridLine = false;
 
 		this.element = el;
 		this.params = mergeDeepObject(params, this.paramsDefault);
@@ -68,6 +69,10 @@ class VGRangeSlider extends BaseModule {
 		$container.classList.add(_this.classes.container);
 		$container.id = _this._id;
 
+		if (_this.params.grid) {
+			$container.classList.add('vg-rs-with-grid')
+		}
+
 		switch (_this.params.skin) {
 			case 'flat': $container.classList.add(_this.classes.skin.flat); break;
 			case 'round': $container.classList.add(_this.classes.skin.round); break;
@@ -76,6 +81,7 @@ class VGRangeSlider extends BaseModule {
 		drawRSWrapper($container);
 		drawRSBar($container);
 		drawRSHandle($container);
+		drawRSGrid($container)
 
 		_this.element.setAttribute('value', _this.params.from);
 		_this.element.before($container);
@@ -116,6 +122,13 @@ class VGRangeSlider extends BaseModule {
 			let $handle = document.createElement('span');
 			$handle.classList.add(_this.classes.handle);
 			container.appendChild($handle);
+		}
+		function drawRSGrid(container) {
+			if (_this.params.grid) {
+				let $grid = document.createElement('span');
+				$grid.classList.add(_this.classes.grid)
+				container.appendChild($grid);
+			}
 		}
 	}
 
@@ -176,6 +189,35 @@ class VGRangeSlider extends BaseModule {
 					let $_el = _this.container.querySelector('.vg-rs-' + obj);
 					if ($_el) {
 						$_el.innerHTML = String(datum[obj]);
+					}
+				}
+
+				if (obj === 'grid') {
+					let step = datum.step,
+						breakdown = 0;
+
+					if (step === 0) step = 1;
+					if (step !== 1) {
+						breakdown = datum.max / step;
+					} else {
+						breakdown = datum.max / 5;
+					}
+
+					if (!_this.isGridLine) {
+						let $grid = _this.container.querySelector('.' + _this.classes.grid);
+						let span = document.createElement('span');
+						span.classList.add('big');
+						span.classList.add(_this.classes.grid + '-line');
+						$grid.append(span);
+
+						for (let i = 1; i <= breakdown; i++) {
+							let span = document.createElement('span');
+							span.classList.add(_this.classes.grid + '-line');
+							span.classList.add('big');
+							$grid.append(span);
+						}
+
+						_this.isGridLine = true;
 					}
 				}
 

@@ -35,6 +35,14 @@ $skin-round-map: (
 				background: white,
 				radius: 24px,
 				shadow: 0 1px 3px rgba(0,0,255,0.3)
+		),
+		grid: (
+				height: 25px,
+		),
+		gridLine: (
+				width: 1px,
+				height: 4px,
+				background: #dedede
 		)
 );
 

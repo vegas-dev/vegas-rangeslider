@@ -54,7 +54,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/OSPanel/domains/dev/carousel",
+    "last_opened_file_path": "C:/OSPanel/domains/plugins/vegas-rangeslider",
     "list.type.of.created.stylesheet": "SCSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -132,6 +132,7 @@
       <workItem from="1730124692971" duration="940000" />
       <workItem from="1730125887282" duration="1305000" />
       <workItem from="1730127367326" duration="690000" />
+      <workItem from="1730132596064" duration="7772000" />
     </task>
     <servers />
   </component>
